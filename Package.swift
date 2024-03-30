@@ -10,6 +10,7 @@ let platforms: [SupportedPlatform] = [
 ]
 let dependencies: [Package.Dependency] = [
     .package(url: "https://github.com/awslabs/aws-sdk-swift.git", exact: "0.36.1"),
+    .package(url: "https://github.com/aws-amplify/aws-appsync-realtime-client-ios.git", from: "3.0.0"),
     .package(url: "https://github.com/stephencelis/SQLite.swift.git", exact: "0.13.2"),
     .package(url: "https://github.com/mattgallagher/CwlPreconditionTesting.git", from: "2.1.0"),
     .package(url: "https://github.com/aws-amplify/amplify-swift-utils-notifications.git", from: "1.1.0")
@@ -115,8 +116,8 @@ let apiTargets: [Target] = [
         name: "AWSAPIPlugin",
         dependencies: [
             .target(name: "Amplify"),
-            .target(name: "AWSPluginsCore")
-        ],
+            .target(name: "AWSPluginsCore"),
+            .product(name: "AppSyncRealTimeClient", package: "aws-appsync-realtime-client-ios")],
         path: "AmplifyPlugins/API/Sources/AWSAPIPlugin",
         exclude: [
             "Info.plist",
@@ -162,6 +163,7 @@ let authTargets: [Target] = [
             .target(name: "AmplifySRP"),
             .target(name: "AWSPluginsCore"),
             .product(name: "AWSClientRuntime", package: "aws-sdk-swift"),
+            .product(name: "AWSSNS", package: "aws-sdk-swift"),
             .product(name: "AWSCognitoIdentityProvider", package: "aws-sdk-swift"),
             .product(name: "AWSCognitoIdentity", package: "aws-sdk-swift")
         ],
